@@ -1,0 +1,46 @@
+# Import necessary libraries
+import random
+
+# Sample transaction data
+transactions = [
+    {"transaction_id": 1, "amount": 100, "location": "USA", "is_online": True},
+    {"transaction_id": 2, "amount": 5000, "location": "USA", "is_online": False},
+    {"transaction_id": 3, "amount": 200, "location": "France", "is_online": True},
+    {"transaction_id": 4, "amount": 10000, "location": "India", "is_online": True},
+    {"transaction_id": 5, "amount": 50, "location": "USA", "is_online": False},
+]
+
+# Predefined fraud detection rules
+def is_fraud(transaction):
+    # Rule 1: Amount exceeds $5000
+    if transaction["amount"] > 5000:
+        return True
+    
+    # Rule 2: Online transactions from foreign countries
+    if transaction["is_online"] and transaction["location"] != "USA":
+        return True
+    
+    # Rule 3: Randomized check (for demo purposes)
+    if random.random() < 0.01:  # 1% chance to flag as fraud
+        return True
+    
+    return False
+
+# Function to process transactions
+def process_transactions(transactions):
+    fraud_cases = []
+    for transaction in transactions:
+        if is_fraud(transaction):
+            fraud_cases.append(transaction)
+    return fraud_cases
+
+# Run the fraud detection system
+fraudulent_transactions = process_transactions(transactions)
+
+# Display results
+if fraudulent_transactions:
+    print("Fraudulent Transactions Detected:")
+    for fraud in fraudulent_transactions:
+        print(f"Transaction ID: {fraud['transaction_id']}, Amount: ${fraud['amount']}, Location: {fraud['location']}")
+else:
+    print("No Fraudulent Transactions Detected.")
